@@ -63,7 +63,7 @@ extension MapVC : CLLocationManagerDelegate{
 }
 
 protocol mapLocationDelegate: class {
-    func didSelectNewCity(addresss: String)
+    func didSelectNewCity(cityAddress: LocationHandle)
 }
 
 extension MapVC: GMSMapViewDelegate{
@@ -71,7 +71,7 @@ extension MapVC: GMSMapViewDelegate{
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         LocationHandle.initWith(coordinate: coordinate) { (bean) in
             self.dismiss(animated: true, completion: {
-                self.delegate?.didSelectNewCity(addresss: bean.address ?? "")
+                self.delegate?.didSelectNewCity(cityAddress:bean )
             })
         }
     }
@@ -79,7 +79,7 @@ extension MapVC: GMSMapViewDelegate{
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         LocationHandle.initWith(coordinate: marker.position) { (bean) in
             self.dismiss(animated: true, completion: {
-                self.delegate?.didSelectNewCity(addresss: bean.address ?? "")
+                self.delegate?.didSelectNewCity(cityAddress: bean)
             })
         }
         return true
