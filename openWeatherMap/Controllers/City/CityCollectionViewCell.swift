@@ -16,10 +16,11 @@ class CityCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var pressureValue: UILabel?
     @IBOutlet weak var humidityValue: UILabel?
     
-    @IBOutlet weak var currentTemp: UILabel?
+    @IBOutlet weak var dateLabel: UILabel?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        currentTemp?.text = "Current Temp"
     }
     
 

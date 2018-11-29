@@ -33,11 +33,13 @@ extension CityVC: UICollectionViewDataSource,UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cityCell", for: indexPath) as! CityCollectionViewCell
         let oneItem = weatherResponse[indexPath.row].weather
+        let oneDate = weatherResponse[indexPath.row].date
         cell.currentTempValue?.text = String(format:"%.f",(oneItem?.currentTemp)!)
         cell.minTempValue?.text = String(format:"%.f",(oneItem?.minTemp)!)
         cell.maxTempValue?.text = String(format:"%.f",(oneItem?.maxTemp)!)
         cell.pressureValue?.text = String(format:"%.f",(oneItem?.pressure)!)
         cell.humidityValue?.text = String(format:"%.f",(oneItem?.humidity)!)
+        cell.dateLabel?.text = oneDate
         return cell
     }
     
