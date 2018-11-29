@@ -22,4 +22,6 @@ class CityCollectionViewCell: UICollectionViewCell {
         currentTemp?.text = "Current Temp"
     }
     
+
+    
 }

@@ -18,10 +18,14 @@ class CityVC: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        cityCollection?.collectionViewLayout.invalidateLayout()
+    }
 }
 
 // MARK: - Collection View
-extension CityVC: UICollectionViewDataSource,UICollectionViewDelegate  {
+extension CityVC: UICollectionViewDataSource,UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return weatherResponse.count
     }
@@ -36,20 +40,30 @@ extension CityVC: UICollectionViewDataSource,UICollectionViewDelegate  {
         cell.humidityValue?.text = String(format:"%.f",(oneItem?.humidity)!)
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 200)
+    }
+
     // handle collectionView during orientation
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        if UIDevice.current.orientation.isLandscape,
-            let layout = cityCollection?.collectionViewLayout as? UICollectionViewFlowLayout {
-            let width = view.frame.height
-            layout.itemSize = CGSize(width: width , height: 200)
-            layout.invalidateLayout()
-            cityCollection?.reloadData()
-        } else if UIDevice.current.orientation.isPortrait,
-            let layout = cityCollection?.collectionViewLayout as? UICollectionViewFlowLayout {
-            let width = view.frame.width
-            layout.itemSize = CGSize(width: width , height: 200)
-            layout.invalidateLayout()
-            cityCollection?.reloadData()
+        cityCollection?.layoutSubviews()
+        if UIDevice.current.orientation.isLandscape{
+            if let layout = cityCollection?.collectionViewLayout as? UICollectionViewFlowLayout {
+                
+                layout.itemSize = CGSize(width: cityCollection?.frame.width ?? 0.0, height: 200)
+                layout.invalidateLayout()
+                
+            }
+            
+        }else if UIDevice.current.orientation.isPortrait{
+            if let layout = cityCollection?.collectionViewLayout as? UICollectionViewFlowLayout {
+                
+                layout.itemSize = CGSize(width: cityCollection?.frame.width ?? 0.0, height: 200)
+                layout.invalidateLayout()
+                
+            }
+            
         }
     }
     
